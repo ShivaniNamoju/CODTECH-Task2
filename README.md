@@ -65,29 +65,44 @@ State Machine
 The receiver uses a finite state machine (FSM) with five states:
 
 s_Idle: Initial state, waiting for start bit
+
 s_RX_Start_Bit: Start bit detected, waiting for middle of start bit
+
 s_RX_Data_Bits: Receiving data bits
+
 s_RX_Stop_Bit: Receiving stop bit
+
 s_Cleanup: Final state, preparing for next reception
+
 Signals
 
 **The architecture uses several signals:**
 
 r_SM_Main: Current state of the FSM
+
 r_Clk_Count: Clock counter for timing
+
 r_Bit_Index: Bit index for receiving data bits
+
 r_RX_Byte: Received byte signal (8 bits)
+
 r_RX_DV: Data valid signal
+
 Process
 
 **The p_UART_RX process describes the behavior of the FSM:**
 
 s_Idle: Wait for start bit, reset counters and bit index.
+
 s_RX_Start_Bit: Check middle of start bit, if low, transition to s_RX_Data_Bits.
+
 s_RX_Data_Bits: Receive data bits, increment clock counter and bit index.
+
 s_RX_Stop_Bit: Receive stop bit, wait for stop bit to finish.
+
 s_Cleanup: Prepare for next reception, reset signals.
-Output Assignments
+
+**Output Assignments**
 
 The output signals o_RX_DV and o_RX_Byte are assigned the values of r_RX_DV and r_RX_Byte, respectively.
 
